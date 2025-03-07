@@ -33,7 +33,7 @@ def place_order(menu):
     while ordering:
 
         # TODO: Ask the customer what they want to order
-        user_order = input("Please enter your order:")
+        ("Please enter your order:")
 
         # Create a variable for the menu item number
         i = 1
@@ -64,7 +64,36 @@ def place_order(menu):
 
         # TODO: Update the order list using the update_order function
         # TODO: Send the order list, menu selection, and menu items as arguments
-        update_order(order, menu_selection, menu_items)
+        def update_order(order, menu_selection, menu_items):
+
+            selection = int(menu_selection)
+
+            if selection.isdigit():
+
+                if selection in menu_items:
+
+                    item_name = menu_items[selection]["Item name"]
+
+                    quantity_input = input(f"How many {item_name} would you like? ")
+
+                    if quantity_input.isdigit():
+                        quantity = int(quantity_input)
+                    else:
+                        print("Invalid selection. Setting quantity to 1.")
+                        quantity = 1
+
+                    order.append({
+                        "Item name": item_name,
+                        "Price": menu_items[selection]["Price"],
+                        "Quantity": quantity
+                    })
+                else:
+                    print(f"Selection {selection} is not a valid menu option.")
+            else:
+                print (f"'{menu_selection}' is not a valid selection. Please choose a menu number")
+
+
+
 
 
         # TODO: Ask the customer if they would like to order anything else
@@ -80,18 +109,22 @@ def place_order(menu):
             # TODO: Use list comprehension to create a list called prices_list,
             # TODO: which contains the total prices for each item in the order list:
             # TODO: The total price for each item should multiply the price by quantity
-            
+            prices_list = [item["Price"] * item["Quantity"] for item in order]
 
 
             # TODO: Create an order_total from the prices list using sum()
             # TODO: Round the prices to 2 decimal places.
+            order_total= round(sum(prices_list), 2)
 
 
             # TODO: Exit the ordering loop
             # TODO: Either use a break statement or set the condition to False
+            ordering = False
+
 
 
     # TODO: Return the order list and the order total
+    return order, order_total
 
 
 def update_order(order, menu_selection, menu_items):
